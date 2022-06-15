@@ -1,4 +1,4 @@
-const { request, response, json } = require('express');
+const { request, response, json, Router } = require('express');
 const User = require('../models/user');
 const bycript = require('bcryptjs');
 
@@ -97,12 +97,16 @@ const putUser = async (req, res = response) => {
 const deleteUser = async (req, res = response) => {
     try {
         const { id } = req.params;
-        // const userDelete = await User.findByIdAndDelete(id);
+        const userAuth = req.userAuth
+
+
+
         const userDelete = await User.findByIdAndUpdate(id,{status:false})
 
         res.status(202).json({
             msg: 'User delete',
             userDelete,
+            "User Auth":userAuth,
         });
     } catch (e) {
         return res.status(404).json({

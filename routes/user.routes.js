@@ -3,23 +3,22 @@ const { Router } = require('express');
 const { check, body } = require('express-validator');
 
 const { getUser, putUser, deleteUser, postUser, getUserID } = require('../controller/user.controller');
-const { isEmailUsed,isRoleValid, isUserID, isAdmin } = require('../helpers/db.validators');
-const { validateInputs,validatePage } = require('../middlewares/validators/validate.input');
+const { isEmailUsed, isRoleValid, isUserID, isAdmin } = require('../helpers/db.validators');
 
+// const { validateInputs, validatePage } = require('../middlewares/validators/validate.input');
+// const { validateJWT } = require('../middlewares/validators/validate.jwt');
+// const { validateRole,validateIsAdmin } = require('../middlewares/validators/validate.role');
 
+const {validateInputs,validateJWT,validateRole,validateIsAdmin} = require('../middlewares');
 
 const router = Router();
 
-// router.get('/',cors(corsOptions), getUser)
-
-router.get('/',[
-    // check('limit').custom(validatePage),
-    // check('since').custom(validatePage),
+router.get('/', [
     validateInputs
 ], getUser);
 
-router.get('/:id',[
-    check('id','The ID is invalid').isMongoId(),
+router.get('/:id', [
+    check('id', 'The ID is invalid').isMongoId(),
     check('id').custom(isUserID),
     validateInputs
 ], getUserID);
@@ -33,16 +32,19 @@ router.post('/', [
     validateInputs //validador general de todos los inputs
 ], postUser);
 
-router.put('/:id',[
+router.put('/:id', [
     // check('_id','The ID is invalid').isMongoId(),
-    check('id','The ID is invalid').isMongoId(),
+    check('id', 'The ID is invalid').isMongoId(),
     check('id').custom(isUserID),
     check('role').custom(isRoleValid),
     validateInputs
 ], putUser);
 
-router.delete('/:id',[
-    check('id','The ID is invalid').isMongoId(),
+router.delete('/:id', [
+    validateJWT,
+    validateRole(['ADMIN_ROLE','VENTAS_ROLE']),
+    // validateIsAdmin,
+    check('id', 'The ID is invalid').isMongoId(),
     check('id').custom(isUserID),
     //credenciales del usuario de sesion
     // check('id').custom(isAdmin),
