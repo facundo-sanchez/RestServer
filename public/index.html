@@ -1,0 +1,56 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Denegado</title>
+</head>
+
+<body>
+    <h1>Google</h1>
+
+
+    <div id="g_id_onload" data-client_id="660790462913-424797fuvtt2if77s0ij8fg0tmtvub2m.apps.googleusercontent.com"
+        data-login_uri="https://your.domain/your_login_endpoint" data-auto_prompt="false"
+        data-callback="handleCredentialResponse">
+    </div>
+    <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with"
+        data-shape="rectangular" data-logo_alignment="left">
+    </div>
+
+    <script>
+        async function handleCredentialResponse(response) {
+            //    const responsePayload = decodeJwtResponse(response.credential);
+
+            //token de google
+            // console.log(response.credential)
+            // fetch('http://localhost:8989/api/auth/google', {
+            //     method: "POST",
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify()
+            // })
+            //     .then(res => res.json())
+            //     .then(res => console.log(res))
+            //     .catch(err => console.log(err))
+
+                const body = {id_token:response.credential} 
+            try {
+                const response = await fetch('http://localhost:8989/api/auth/google', {
+                    method: "POST",
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                })
+
+                const content = await response.json();
+                console.log(content)
+            } catch (e) {
+                console.log(e)
+            }
+        }
+    </script>
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</body>
+
+</html>
