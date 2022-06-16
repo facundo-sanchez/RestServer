@@ -1,4 +1,4 @@
-const Role = require('../data/role.data');
+const Role = require('../models/role.data');
 const User = require('../models/user');
 
 
