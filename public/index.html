@@ -19,6 +19,8 @@
         data-shape="rectangular" data-logo_alignment="left">
     </div>
 
+    <button id="googleLogout">Logout</button>
+
     <script>
         async function handleCredentialResponse(response) {
             //    const responsePayload = decodeJwtResponse(response.credential);
@@ -43,11 +45,25 @@
                 })
 
                 const content = await response.json();
+                localStorage.setItem('email',content.user.email)
                 console.log(content)
             } catch (e) {
                 console.log(e)
             }
         }
+
+        const button = document.getElementById('googleLogout');
+        button.onclick = ()=>{
+            console.log(google.accounts.id)
+            google.accounts.id.disableAutoSelect()
+            google.accounts.id.revoke(localStorage.getItem('email'),done=>{
+                localStorage.clear();
+                location.reload()
+            })
+           
+        }
+
+
     </script>
 
     <script src="https://accounts.google.com/gsi/client" async defer></script>
