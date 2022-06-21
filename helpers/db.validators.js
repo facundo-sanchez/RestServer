@@ -1,6 +1,5 @@
 const Role = require('../models/role.data');
-const User = require('../models/user');
-
+const {Category,User} = require('../models/');
 
 exports.isRoleValid = async (role = '') => {
     const existRole = await Role.findOne({ role });
@@ -20,8 +19,14 @@ exports.isUserID = async (id = '') => {
 exports.isAdmin = async (id = '') => {
     const verifyUser = await User.findById(id)
     if (!verifyUser) throw new Error(`The ID ${id} not exist`);
-    if(verifyUser.role !== 'ADMIN_ROLE') throw new Error(`The User ${id} not Admin`);
+    if (verifyUser.role !== 'ADMIN_ROLE') throw new Error(`The User ${id} not Admin`);
 }
+
+exports.isCategoryID = async (id = '') => {
+    const verifyCategory = await Category.findById(id);
+    if(!verifyCategory) throw new Error(`The ID ${id} not exist`);
+}
+
 
 exports.isIdValid = async () => {
 
