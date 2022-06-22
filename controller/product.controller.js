@@ -60,10 +60,20 @@ exports.getProductID = async (req = request, res = response) => {
 exports.postProduct = async (req = request, res = response) => {
     try {
         const {status,user,...body} = req.body;
+        body.name = body.name.toUpperCase();
+
+        const productDB = await Product.findOne({name:body.name})
+        if(productDB){
+            return res.status(401).json({
+                ok:false,
+                msg:'Product ready exist',
+                name:body.name
+            })
+        }
 
         const data = {
             ...body,
-            nam:body.name.toUpperCase(),
+            nam:body.name,
             user:req.userAuth._id
         }
 
