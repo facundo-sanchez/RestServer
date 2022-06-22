@@ -95,7 +95,7 @@ exports.postProduct = async (req = request, res = response) => {
 
 exports.putProduct = async (req = request, res = response) => {
     try {
-        // const { id } = req.params
+        const { id } = req.params
         const { status, user, ...body } = req.body;
         const data = {
             ...body,
