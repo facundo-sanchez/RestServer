@@ -1,21 +1,20 @@
 const {Schema, model} = require('mongoose');
-const user = require('./user');
 
 const CategorySchema = Schema({
     name: {
         type: String,
-        require: [true, 'Name is required '],
+        required: [true, 'Name is required '],
         unique:true
     },
     status: {
         type: Boolean,
         default: true,
-        require: true
+        required: true
     },
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User',
-        require: true
+        required: true
     }
 
 });

@@ -1,6 +1,5 @@
 const { request, response } = require('express')
 const { Category } = require('../models');
-const user = require('../models/user');
 
 exports.getCategory = async (req = request, res = response) => {
     try {
@@ -9,7 +8,7 @@ exports.getCategory = async (req = request, res = response) => {
 
         const [categories, totalCategories] = await Promise.all([
             Category.find(query)
-                .populate('user', ['name', 'email'])
+                .populate('user', ['name'])
                 .skip(since)
                 .limit(limit),
             Category.count(query)
@@ -37,7 +36,7 @@ exports.getCategory = async (req = request, res = response) => {
 exports.getCategoryID = async (req = request, res = response) => {
     try {
         const { id } = req.params
-        const category = await Category.findById(id).populate('user', ['name', 'email']);
+        const category = await Category.findById(id).populate('user', ['name']);
 
         res.status(200).json({
             ok: true,
@@ -81,9 +80,10 @@ exports.postCategory = async (req = request, res = response) => {
 
 
     } catch (e) {
+        console.log(e)
         res.status(500).json({
             ok: false,
-            msg: e
+            msg: `${e}`
         })
     }
 }

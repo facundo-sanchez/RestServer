@@ -17,7 +17,7 @@ router.get('/:id',[
 
 router.post('/',[
     validateJWT,
-    check('name','The name is required').not().isEmail(),
+    check('name','The name is required').not().isEmpty(),
     check('category').isMongoId(),
     check('category').custom(isCategoryID),
     validateInputs
@@ -29,10 +29,8 @@ router.put('/:id',[
     check('id','The ID is invalid').isMongoId(),
     check('id').custom(isProductID),
     check('name','The name is required').not().isEmpty(),
-    // check('category').isMongoId(),
-    // check('category').custom(isCategoryID),
-    validateInputs,
-    validateCategory
+    validateCategory,
+    validateInputs
 ],putProduct);
 
 router.delete('/:id',[

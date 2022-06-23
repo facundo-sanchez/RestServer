@@ -1,4 +1,4 @@
-const Role = require('../models/role.data');
+const Role = require('../models/role');
 const { Category, User, Product } = require('../models/');
 
 exports.isRoleValid = async (role = '') => {

@@ -32,7 +32,7 @@ exports.getProduct = async (req = request, res = response) => {
     } catch (e) {
         res.status(500).json({
             ok: false,
-            msg:`${e}`
+            msg: `${e}`
         })
     }
 }
@@ -41,7 +41,9 @@ exports.getProductID = async (req = request, res = response) => {
     try {
         const { id } = req.params;
 
-        const product = await Product.findById(id);
+        const product = await Product.findById(id)
+            .populate('user', ['name', 'email'])
+            .populate('category', ['name']);
 
         res.status(200).json({
             ok: true,
@@ -51,7 +53,7 @@ exports.getProductID = async (req = request, res = response) => {
     } catch (e) {
         res.status(500).json({
             ok: false,
-            msg:`${e}`
+            msg: `${e}`
         })
     }
 }
@@ -87,7 +89,7 @@ exports.postProduct = async (req = request, res = response) => {
         console.log(e)
         res.status(500).json({
             ok: false,
-            msg:`${e}`
+            msg: `${e}`
         })
     }
 }
@@ -111,7 +113,7 @@ exports.putProduct = async (req = request, res = response) => {
     } catch (e) {
         res.status(500).json({
             ok: false,
-            msg:`${e}`
+            msg: `${e}`
         })
     }
 }
@@ -131,7 +133,7 @@ exports.deleteProduct = async (req = request, res = response) => {
     } catch (e) {
         res.status(500).json({
             ok: false,
-            msg:`${e}`
+            msg: `${e}`
         })
     }
 }

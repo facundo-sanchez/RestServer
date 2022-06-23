@@ -12,9 +12,10 @@ class Server {
         this.port = process.env.PORT;
         this.path = {
             auth:'/api/auth',
-            user:'/api/user',
             category:'/api/category',
-            product:'/api/product'
+            product:'/api/product',
+            search:'/api/search',
+            user:'/api/user'
         }
 
         //connect db
@@ -50,6 +51,7 @@ class Server {
         this.app.use(this.path.category,require('../routes/category.routes'));
         this.app.use(this.path.user, require('../routes/user.routes'));
         this.app.use(this.path.product,require('../routes/product.routes'))
+        this.app.use(this.path.search,require('../routes/search.routes'))
     }
 
     listen() {

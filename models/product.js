@@ -3,31 +3,31 @@ const {Schema,model} = require('mongoose')
 const ProductSchema = Schema({
     name:{
         type:String,
-        require:[true,'The name is required']
+        required:[true,'The name is required']
     },
     status:{
         type:Boolean,
-        require:true,
+        required:true,
         default:true
     },
     price:{
         type:Number,
         default:0,
-        require:false
+        required:false
     },
     user:{
         type:Schema.Types.ObjectId,
         ref:'User',
-        require:true
+        required:true
     },
     category:{
         type:Schema.Types.ObjectId,
         ref:'Category',
-        require: [true,'The category is required']
+        required: [true,'The category is required']
     },
     description:{
         type:String,
-        require:false,
+        required:false,
         default:'N/A'
     },
     available:{
